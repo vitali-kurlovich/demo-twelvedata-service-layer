@@ -1,0 +1,16 @@
+@startuml
+title Symbol
+
+struct Symbol {
+    + rawValue: String
+    + id: String
+    + description : String
+}
+
+Symbol <|-- Hashable
+Symbol <|-- Identifiable
+Symbol <|-- Comparable
+Symbol <|-- Codable
+
+@end
+

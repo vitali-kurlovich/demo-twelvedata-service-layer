@@ -1,0 +1,18 @@
+@startuml
+title ConnectivityService
+
+enum ConnectivityState {
+    disconnected
+    connecting
+    connected
+    reconnecting
+    failed
+}
+
+protocol ConnectivityService {
+    + connectivity: Stream<ConnectivityState>
+}
+
+ConnectivityService *-- ConnectivityState
+
+@end

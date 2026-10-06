@@ -1,0 +1,13 @@
+@startuml
+
+title TwelveDataApiKeyService
+
+protocol TwelveDataApiKeyService {
+    + apiKey: String
+    + update(apiKey: String)
+    + removeApiKey()
+    + updates: Stream<Void, Never>
+}
+
+@enduml
+

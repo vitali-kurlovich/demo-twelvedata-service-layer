@@ -1,0 +1,13 @@
+@startuml
+
+
+title TwelveDataAdapter
+
+package "demo-twelvedata-service-layer: TwelveDataAdapter" {
+    !include Services/TwelveDataServiceLocator.puml
+    !include Services/TwelveDataApiKeyService.puml
+
+}
+
+
+@enduml

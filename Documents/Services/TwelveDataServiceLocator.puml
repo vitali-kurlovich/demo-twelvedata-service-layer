@@ -1,0 +1,27 @@
+@startuml
+
+!include Deps/DataLayer.puml
+!include TwelveDataApiKeyService.puml
+
+title TwelveDataServiceLocator
+
+struct TwelveDataServiceLocator {
+    + apiKeyService: any TwelveDataApiKeyService
+
+    + symbolPriceService: any SymbolPriceService
+    + connectivityService: any ConnectivityService
+    + forexService: any ForexPairsService
+    + cryptoService: any CryptoPairsService
+    + stockService: any StocksService
+    + commoditiesService: any CommoditiesPairsService
+}
+
+TwelveDataServiceLocator *-- TwelveDataApiKeyService
+
+TwelveDataServiceLocator *-- SymbolPriceService
+TwelveDataServiceLocator *-- ConnectivityService
+TwelveDataServiceLocator *-- ForexPairsService
+TwelveDataServiceLocator *-- CryptoPairsService
+TwelveDataServiceLocator *-- StocksService
+TwelveDataServiceLocator *-- CommoditiesPairsService
+@enduml
