@@ -22,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.1.0"),
         .package(url: "https://github.com/vitali-kurlovich/demo-service-layer", from: "0.0.4"),
         .package(url: "https://github.com/vitali-kurlovich/swift-twelvedata", from: "0.3.3"),
-        
+
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -32,9 +32,8 @@ let package = Package(
             dependencies: [
                 .product(name: "DataLayer", package: "demo-service-layer"),
                 .product(name: "TwelveDataStream", package: "swift-twelvedata"),
+                .product(name: "TwelveDataREST", package: "swift-twelvedata"),
             ]
-        )
-           
-     
+        ),
     ]
 )
