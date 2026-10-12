@@ -11,7 +11,7 @@ extension TwelveDataSymbolPriceAdapter: ConnectivityService {
     }
 }
 
-nonisolated struct TwelveDataSymbolPriceAdapter: SymbolPriceService, Sendable {
+nonisolated struct TwelveDataSymbolPriceAdapter: SymbolPriceService, FeedsSubscribeService, Sendable {
     private let repository: TwelveDataSymbolPriceRepository
     private let connectivityService: TwelveDataConnectivityAdapter
 
@@ -47,15 +47,21 @@ nonisolated struct TwelveDataSymbolPriceAdapter: SymbolPriceService, Sendable {
         }
     }
 
-    func subsribe(_ symbols: Set<String>) {
+    func subsribe(_ symbols: Set<Symbol>) {
         Task {
-            await repository.subsribe(symbols)
+            let keys = symbols.map {
+                $0.id
+            }
+            await repository.subsribe(Set(keys))
         }
     }
 
-    func unsubsribe(_ symbols: Set<String>) {
+    func unsubsribe(_ symbols: Set<Symbol>) {
         Task {
-            await repository.unsubsribe(symbols)
+            let keys = symbols.map {
+                $0.id
+            }
+            await repository.unsubsribe(Set(keys))
         }
     }
 }
