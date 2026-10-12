@@ -37,7 +37,7 @@ public struct TwelveDataServiceLocator: Sendable {
 }
 
 public extension TwelveDataServiceLocator {
-    var feedsSubscribeService: FeedsSubscribeService {
+    var feedsSubscribeService: any FeedsSubscribeService {
         symbolPriceServiceImpl
     }
 
