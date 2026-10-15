@@ -129,7 +129,9 @@ private actor TwelveDataSymbolPriceRepository {
         }
 
         Task {
-            await socket.subscribe(symbols: symbols)
+            do {
+                try await socket.subscribe(symbols: symbols)
+            } catch {}
         }
     }
 
@@ -140,7 +142,9 @@ private actor TwelveDataSymbolPriceRepository {
         }
 
         Task {
-            await socket.unsubscribe(symbols: symbols)
+            do {
+                try await socket.unsubscribe(symbols: symbols)
+            } catch {}
         }
     }
 }
