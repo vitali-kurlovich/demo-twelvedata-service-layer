@@ -8,6 +8,10 @@ import TwelveDataREST
 struct TwelveDataStocksService: StocksService {
     let apiKeyService: any TwelveDataApiKeyService
 
+    func fetch() async throws(FetchError) -> [StockInstrument] {
+        try await stocks()
+    }
+
     func stocks() async throws(FetchError) -> [StockInstrument] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)

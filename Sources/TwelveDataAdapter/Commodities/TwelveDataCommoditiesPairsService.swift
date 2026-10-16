@@ -8,6 +8,10 @@ import TwelveDataREST
 nonisolated struct TwelveDataCommoditiesPairsService: CommoditiesPairsService {
     let apiKeyService: any TwelveDataApiKeyService
 
+    func fetch() async throws(FetchError) -> [CommoditiesPair] {
+        try await commodities()
+    }
+
     func commodities() async throws(FetchError) -> [CommoditiesPair] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
