@@ -9,10 +9,6 @@ struct TwelveDataStocksService: StocksService {
     let apiKeyService: any TwelveDataApiKeyService
 
     func fetch() async throws(FetchError) -> [StockInstrument] {
-        try await stocks()
-    }
-
-    func stocks() async throws(FetchError) -> [StockInstrument] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
@@ -21,6 +17,26 @@ struct TwelveDataStocksService: StocksService {
                 StockInstrument(pair)
             }
 
+        } catch {
+            throw FetchError(error)
+        }
+    }
+
+    func fetch(_ page: FetchPage) async throws(FetchError) -> AssetsPage<StockInstrument> {
+        do {
+            let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
+
+            let response = try await rest.stocks(page: .init(page))
+
+            let assets = response.data.map { pair in
+                StockInstrument(pair)
+            }
+
+            return AssetsPage(
+                count: response.count,
+                page: page.page,
+                assets: assets
+            )
         } catch {
             throw FetchError(error)
         }

@@ -9,10 +9,6 @@ nonisolated struct TwelveDataForexPairsService: ForexPairsService {
     let apiKeyService: any TwelveDataApiKeyService
 
     func fetch() async throws(FetchError) -> [ForexPair] {
-        try await forexPairs()
-    }
-
-    func forexPairs() async throws(FetchError) -> [ForexPair] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
@@ -21,6 +17,26 @@ nonisolated struct TwelveDataForexPairsService: ForexPairsService {
                 ForexPair(pair)
             }
 
+        } catch {
+            throw FetchError(error)
+        }
+    }
+
+    func fetch(_ page: FetchPage) async throws(FetchError) -> AssetsPage<ForexPair> {
+        do {
+            let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
+
+            let response = try await rest.forexPairs(page: .init(page))
+
+            let assets = response.data.map { pair in
+                ForexPair(pair)
+            }
+
+            return AssetsPage(
+                count: response.count,
+                page: page.page,
+                assets: assets
+            )
         } catch {
             throw FetchError(error)
         }

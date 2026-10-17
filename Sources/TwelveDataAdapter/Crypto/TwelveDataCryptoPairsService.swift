@@ -9,10 +9,6 @@ nonisolated struct TwelveDataCryptoPairsService: CryptoPairsService {
     let apiKeyService: any TwelveDataApiKeyService
 
     func fetch() async throws(FetchError) -> [CryptoPair] {
-        try await cryptoPairs()
-    }
-
-    func cryptoPairs() async throws(FetchError) -> [CryptoPair] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
@@ -21,6 +17,26 @@ nonisolated struct TwelveDataCryptoPairsService: CryptoPairsService {
                 CryptoPair(pair)
             }
 
+        } catch {
+            throw FetchError(error)
+        }
+    }
+
+    func fetch(_ page: FetchPage) async throws(FetchError) -> AssetsPage<CryptoPair> {
+        do {
+            let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
+
+            let response = try await rest.cryptoPairs(page: .init(page))
+
+            let assets = response.data.map { pair in
+                CryptoPair(pair)
+            }
+
+            return AssetsPage(
+                count: response.count,
+                page: page.page,
+                assets: assets
+            )
         } catch {
             throw FetchError(error)
         }
