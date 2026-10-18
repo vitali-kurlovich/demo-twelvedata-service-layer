@@ -5,7 +5,7 @@
 import DataLayer
 import TwelveDataREST
 
-nonisolated struct TwelveDataCommoditiesPairsService: CommoditiesPairsService {
+nonisolated struct TwelveDataCommoditiesPairsService: AssetsService<CommoditiesPair>, AssetsPagesService<CommoditiesPair>, Sendable {
     let apiKeyService: any TwelveDataApiKeyService
 
     func fetch() async throws(FetchError) -> [CommoditiesPair] {

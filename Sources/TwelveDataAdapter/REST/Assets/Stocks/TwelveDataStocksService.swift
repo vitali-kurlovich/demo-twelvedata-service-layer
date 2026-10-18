@@ -1,20 +1,20 @@
 //
-//  Created by Kurlovich Vitali on 10/4/26.
+//  Created by Kurlovich Vitali on 10/5/26.
 //
 
 import DataLayer
 import TwelveDataREST
 
-nonisolated struct TwelveDataForexPairsService: ForexPairsService {
+struct TwelveDataStocksService: AssetsService<StockInstrument>, AssetsPagesService<StockInstrument>, Sendable {
     let apiKeyService: any TwelveDataApiKeyService
 
-    func fetch() async throws(FetchError) -> [ForexPair] {
+    func fetch() async throws(FetchError) -> [StockInstrument] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
-            let response = try await rest.forexPairs()
+            let response = try await rest.stocks()
             return response.data.map { pair in
-                ForexPair(pair)
+                StockInstrument(pair)
             }
 
         } catch {
@@ -22,14 +22,14 @@ nonisolated struct TwelveDataForexPairsService: ForexPairsService {
         }
     }
 
-    func fetch(_ page: FetchPage) async throws(FetchError) -> AssetsPage<ForexPair> {
+    func fetch(_ page: FetchPage) async throws(FetchError) -> AssetsPage<StockInstrument> {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
-            let response = try await rest.forexPairs(page: .init(page))
+            let response = try await rest.stocks(page: .init(page))
 
             let assets = response.data.map { pair in
-                ForexPair(pair)
+                StockInstrument(pair)
             }
 
             return AssetsPage(

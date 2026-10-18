@@ -49,19 +49,19 @@ public extension TwelveDataServiceLocator {
         symbolPriceServiceImpl
     }
 
-    var forexService: any ForexPairsService {
+    var forexService: any AssetsService<ForexPair> & AssetsPagesService<ForexPair> {
         forexServiceImpl
     }
 
-    var cryptoService: any CryptoPairsService {
+    var cryptoService: any AssetsService<CryptoPair> & AssetsPagesService<CryptoPair> {
         cryptoServiceImpl
     }
 
-    var stockService: any StocksService {
+    var stockService: any AssetsService<StockInstrument> & AssetsPagesService<StockInstrument> {
         stocksServiceImpl
     }
 
-    var commoditiesService: any CommoditiesPairsService {
+    var commoditiesService: any AssetsService<CommoditiesPair> & AssetsPagesService<CommoditiesPair> {
         commoditiesPairsServiceImpl
     }
 }
